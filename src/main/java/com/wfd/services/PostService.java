@@ -28,7 +28,7 @@ public class PostService {
     @Produces({"application/json"})
     public List<VTopic> getTopics(@QueryParam("orderby") String orderBy) {
         
-        if(orderBy.equalsIgnoreCase("latest")){
+        if(orderBy.equalsIgnoreCase(Constants.ORDERBY_LATEST)){
             return topic.getLatestPost();
         }else if(orderBy.equalsIgnoreCase(Constants.ORDERBY_FAVORITE)){
             return topic.getFavoritePost();

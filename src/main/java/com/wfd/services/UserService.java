@@ -7,6 +7,7 @@ package com.wfd.services;
 
 import com.wfd.dao.TUsersDao;
 import com.wfd.entities.TUsers;
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,11 +20,8 @@ import javax.ws.rs.QueryParam;
 @Path("/users")
 public class UserService {
     
-    private final TUsersDao users;
-    
-    public UserService(){
-        users = new TUsersDao();
-    }
+    @EJB
+    TUsersDao users;
     
     @GET
     @Produces({"application/xml", "application/json"})
