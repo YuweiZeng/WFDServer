@@ -26,11 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "T_TOPIC")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TTopic.findAll", query = "SELECT t FROM TTopic t"),
-    @NamedQuery(name = "TTopic.findByTopicId", query = "SELECT t FROM TTopic t WHERE t.topicId = :topicId"),
-    @NamedQuery(name = "TTopic.findBySupportCount", query = "SELECT t FROM TTopic t WHERE t.supportCount = :supportCount"),
-    @NamedQuery(name = "TTopic.findByDisagreeCount", query = "SELECT t FROM TTopic t WHERE t.disagreeCount = :disagreeCount")})
 public class TTopic implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

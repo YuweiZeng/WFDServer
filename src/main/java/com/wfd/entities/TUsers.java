@@ -29,13 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "T_USERS")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TUsers.findAll", query = "SELECT t FROM TUsers t"),
-    @NamedQuery(name = "TUsers.findByUserId", query = "SELECT t FROM TUsers t WHERE t.userId = :userId"),
-    @NamedQuery(name = "TUsers.findByUsername", query = "SELECT t FROM TUsers t WHERE t.username = :username"),
-    @NamedQuery(name = "TUsers.findByPassword", query = "SELECT t FROM TUsers t WHERE t.password = :password"),
-    @NamedQuery(name = "TUsers.findBySecurityquestion", query = "SELECT t FROM TUsers t WHERE t.securityquestion = :securityquestion"),
-    @NamedQuery(name = "TUsers.findBySecurityanswer", query = "SELECT t FROM TUsers t WHERE t.securityanswer = :securityanswer")})
 public class TUsers implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

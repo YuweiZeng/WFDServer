@@ -20,10 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "T_POST_RELATION")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TPostRelation.findAll", query = "SELECT t FROM TPostRelation t"),
-    @NamedQuery(name = "TPostRelation.findByParentId", query = "SELECT t FROM TPostRelation t WHERE t.tPostRelationPK.parentId = :parentId"),
-    @NamedQuery(name = "TPostRelation.findByChildId", query = "SELECT t FROM TPostRelation t WHERE t.tPostRelationPK.childId = :childId")})
 public class TPostRelation implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

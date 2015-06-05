@@ -26,9 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "T_COMMENT")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TComment.findAll", query = "SELECT t FROM TComment t"),
-    @NamedQuery(name = "TComment.findByCommentId", query = "SELECT t FROM TComment t WHERE t.commentId = :commentId")})
 public class TComment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

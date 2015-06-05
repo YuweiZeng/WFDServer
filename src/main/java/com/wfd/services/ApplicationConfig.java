@@ -29,11 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.wfd.services.TCommentFacadeREST.class);
-        resources.add(com.wfd.services.TPostFacadeREST.class);
-        resources.add(com.wfd.services.TPostRelationFacadeREST.class);
-        resources.add(com.wfd.services.TTopicFacadeREST.class);
-        resources.add(com.wfd.services.TUsersFacadeREST.class);
+        resources.add(com.wfd.services.PostService.class);
+        resources.add(com.wfd.services.UserService.class);
     }
     
 }

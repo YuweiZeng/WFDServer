@@ -13,4 +13,7 @@ public class Constants {
     
     public static int DEFAULT_PAGE_NUMBER = 30;
     
+    public static String ORDERBY_LATEST = "latest";
+    public static String ORDERBY_FAVORITE = "favorite";
+    
 }

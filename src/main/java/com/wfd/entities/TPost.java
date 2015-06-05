@@ -33,12 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "T_POST")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TPost.findAll", query = "SELECT t FROM TPost t"),
-    @NamedQuery(name = "TPost.findByPostId", query = "SELECT t FROM TPost t WHERE t.postId = :postId"),
-    @NamedQuery(name = "TPost.findByContent", query = "SELECT t FROM TPost t WHERE t.content = :content"),
-    @NamedQuery(name = "TPost.findByDeleted", query = "SELECT t FROM TPost t WHERE t.deleted = :deleted"),
-    @NamedQuery(name = "TPost.findByTimeT", query = "SELECT t FROM TPost t WHERE t.timeT = :timeT")})
 public class TPost implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
