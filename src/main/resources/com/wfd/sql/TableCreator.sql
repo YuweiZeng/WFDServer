@@ -41,5 +41,12 @@ child_id INTEGER NOT NULL,
 CONSTRAINT pk_relation_id PRIMARY KEY (parent_id,child_id)
 );
 
- 
+CREATE VIEW v_topic AS
+SELECT t_post.post_id as post_id,user_id,content,deleted,time_t,support_count,disagree_count
+FROM t_post,t_topic
+WHERE t_post.post_id = t_topic.post_id;
 
+CREATE VIEW v_comment AS
+SELECT t_post.post_id as post_id,user_id,content,deleted,time_t
+FROM t_post,t_comment
+WHERE t_post.post_id = t_comment.post_id;
