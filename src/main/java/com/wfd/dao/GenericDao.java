@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -23,8 +24,11 @@ public abstract class GenericDao <T, ID extends Serializable>{
         this.entityClass = entityClass;
     }
     
-    public void persist(T entity){
+    public T persist(T entity){
+        getEntityManager().getTransaction().begin();
         getEntityManager().persist(entity);
+        getEntityManager().getTransaction().commit();
+        return entity;
     }
     
     public void update(T entity){

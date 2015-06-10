@@ -4,6 +4,7 @@ username VARCHAR(255) NOT NULL,
 password VARCHAR(255) NOT NULL,
 securityquestion VARCHAR(255) DEFAULT '',
 securityanswer VARCHAR(255) DEFAULT '',
+lacation VARCHAR(255) DEFAULT '',
 CONSTRAINT pk_user_id PRIMARY KEY (user_id)
 );
 CREATE TABLE t_post(

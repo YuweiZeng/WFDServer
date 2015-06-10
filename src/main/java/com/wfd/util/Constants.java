@@ -12,6 +12,7 @@ package com.wfd.util;
 public class Constants {
     
     public static int DEFAULT_PAGE_NUMBER = 30;
+    public static String IMAGE_STORAGE_PATH = "D:\\images\\";
     
     public static String ORDERBY_LATEST = "latest";
     public static String ORDERBY_FAVORITE = "favorite";

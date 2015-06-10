@@ -8,7 +8,7 @@
     <class>com.wfd.entities.TTopic</class>
     <class>com.wfd.entities.TUsers</class>
     <class>com.wfd.entities.VTopic</class>
-    <class>com.wfd.entities.TCommnet</class>
+    <class>com.wfd.entities.VComment</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
