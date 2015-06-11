@@ -6,7 +6,6 @@
 package com.wfd.dao;
 
 import com.wfd.entities.TUsers;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,5 +39,14 @@ public class TUsersDao extends GenericDao<TUsers, Integer>{
        query.setParameter(1, userName);
        return (TUsers)query.getSingleResult();
        
+    }
+    
+    public TUsers check(String userName,String pwd){
+        
+       String jpql = "select t from TUsers t where t.username=?1 and t.password=?2";
+       Query query = em.createQuery(jpql,TUsers.class);
+       query.setParameter(1, userName);
+       query.setParameter(2, pwd);
+       return (TUsers)query.getSingleResult();
     }
 }

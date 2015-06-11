@@ -6,11 +6,13 @@
 package com.wfd.services;
 
 
+import com.wfd.dao.TCommentDao;
 import com.wfd.dao.TFavoriteDao;
 import com.wfd.dao.TPostDao;
 import com.wfd.dao.TTopicDao;
 import com.wfd.dao.TUsersDao;
 import com.wfd.dao.VTopicDao;
+import com.wfd.entities.TComment;
 import com.wfd.entities.TFavorite;
 import com.wfd.entities.TFavoritePK;
 import com.wfd.entities.TPost;
@@ -53,6 +55,8 @@ public class TopicService {
     TTopicDao topicDao;
     @EJB
     TFavoriteDao favoriteDao;
+    @EJB
+    TCommentDao commentDao;
     
     
     @GET
@@ -67,32 +71,71 @@ public class TopicService {
             return null;
         }
     }
-    
-    @PUT
-    @Path("/new")
-    @Consumes({MediaType.MULTIPART_FORM_DATA})
-    public void newTopics(@FormDataParam("content") String content,
-                            @FormDataParam("user_id") Integer userID,
-                            @FormDataParam("image") InputStream fileInputStream,
-                            @FormDataParam("image") FormDataContentDisposition chd){
-        String imagePath = Constants.IMAGE_STORAGE_PATH + userID + File.separator + DateUtil.getCurrentDateString() + chd.getFileName();
-        FileUtil.writeToFile(fileInputStream, imagePath);
+
+    @POST
+    @Path("{id}/newcomment")
+    @Consumes("text/plain")
+    public void addComment(@PathParam("id") int topicID, @QueryParam("user_id") int userID, String content) {
         // Initial post table
         TPost post = new TPost();
         post.setContent(content);
         post.setUserId(usersDao.find(userID));
         post = postDao.persist(post);
         System.out.println("end: " + post.getPostId());
-        // Initial topic table
+        
+         // Initial comment table
+        TComment comment = new TComment();
+        comment.setPostId(post);
+        commentDao.persist(comment);
+        System.out.println("Success");
+        
+    }
+    
+    @PUT
+    @Path("/new")
+    @Consumes("text/plain")
+    public void newTopic(@QueryParam("user_id") int userID, String content) {
+        // Initial post table
+        TPost post = new TPost();
+        post.setContent(content);
+        post.setUserId(usersDao.find(userID));
+        post = postDao.persist(post);
+        System.out.println("end: " + post.getPostId());
+        
+         // Initial topic table
         TTopic topic = new TTopic();
         topic.setPostId(post);
         topicDao.persist(topic);
         System.out.println("Success");
+        
     }
+    
+    //disable the image upload
+//    @PUT
+//    @Path("/new")
+//    @Consumes({MediaType.MULTIPART_FORM_DATA})
+//    public void newTopics(@FormDataParam("content") String content,
+//                            @FormDataParam("user_id") Integer userID,
+//                            @FormDataParam("image") InputStream fileInputStream,
+//                            @FormDataParam("image") FormDataContentDisposition chd){
+//        String imagePath = Constants.IMAGE_STORAGE_PATH + userID + File.separator + DateUtil.getCurrentDateString() + chd.getFileName();
+//        FileUtil.writeToFile(fileInputStream, imagePath);
+//        // Initial post table
+//        TPost post = new TPost();
+//        post.setContent(content);
+//        post.setUserId(usersDao.find(userID));
+//        post = postDao.persist(post);
+//        System.out.println("end: " + post.getPostId());
+//        // Initial topic table
+//        TTopic topic = new TTopic();
+//        topic.setPostId(post);
+//        topicDao.persist(topic);
+//        System.out.println("Success");
+//    }
     
     
     @POST
-    @Path("{id}")
+    @Path("{id}/follows")
     public void follows(@PathParam("id") int topicID, @QueryParam("type") String type) {
         
         if(type.equalsIgnoreCase(Constants.DISAGREE)){
