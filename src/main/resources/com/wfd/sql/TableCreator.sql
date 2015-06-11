@@ -4,7 +4,7 @@ username VARCHAR(255) NOT NULL,
 password VARCHAR(255) NOT NULL,
 securityquestion VARCHAR(255) DEFAULT '',
 securityanswer VARCHAR(255) DEFAULT '',
-lacation VARCHAR(255) DEFAULT '',
+location VARCHAR(255) DEFAULT 'Australia',
 CONSTRAINT pk_user_id PRIMARY KEY (user_id)
 );
 CREATE TABLE t_post(
@@ -40,6 +40,12 @@ CREATE TABLE t_post_relation(
 parent_id INTEGER NOT NULL,
 child_id INTEGER NOT NULL,
 CONSTRAINT pk_relation_id PRIMARY KEY (parent_id,child_id)
+);
+/*Create user favorite table*/
+CREATE TABLE t_favorite(
+user_id INTEGER NOT NULL,
+topic_id INTEGER NOT NULL,
+CONSTRAINT pk_relation_id PRIMARY KEY (user_id,topic_id)
 );
 
 CREATE VIEW v_topic AS

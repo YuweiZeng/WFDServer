@@ -9,6 +9,8 @@
     <class>com.wfd.entities.TUsers</class>
     <class>com.wfd.entities.VTopic</class>
     <class>com.wfd.entities.VComment</class>
+    <class>com.wfd.entities.TFavoritePK</class>
+    <class>com.wfd.entities.TFavorite</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
