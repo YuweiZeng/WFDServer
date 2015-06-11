@@ -5,7 +5,8 @@
  */
 package com.wfd.dao;
 
-import com.wfd.entities.TTopic;
+import com.wfd.entities.TFavorite;
+import com.wfd.entities.TFavoritePK;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,12 +17,12 @@ import javax.persistence.Persistence;
  * @author user
  */
 @Stateless
-public class TTopicDao extends GenericDao<TTopic,Integer>{
+public class TFavoriteDao extends GenericDao<TFavorite,TFavoritePK>{
 //    @PersistenceContext(unitName = "WFD_JPA")
     private EntityManager em;
     
-    public TTopicDao(){
-        super(TTopic.class);
+    public TFavoriteDao(){
+        super(TFavorite.class);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("WFD_JPA");
         em = emf.createEntityManager();
     }
@@ -29,22 +30,6 @@ public class TTopicDao extends GenericDao<TTopic,Integer>{
     @Override
     public EntityManager getEntityManager(){
         return em;
-    }
-    
-    public void disagree(int id){
-        em.getTransaction().begin();
-        TTopic topic = this.find(id);
-        topic.setDisagreeCount(topic.getDisagreeCount() + 1);
-        em.flush();
-        em.getTransaction().commit();
-    }
-    
-    public void agree(int id){
-        em.getTransaction().begin();
-        TTopic topic = this.find(id);
-        topic.setSupportCount(topic.getSupportCount() + 1);
-        em.flush();
-        em.getTransaction().commit();
     }
     
 }

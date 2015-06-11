@@ -6,10 +6,13 @@
 package com.wfd.services;
 
 
+import com.wfd.dao.TFavoriteDao;
 import com.wfd.dao.TPostDao;
 import com.wfd.dao.TTopicDao;
 import com.wfd.dao.TUsersDao;
 import com.wfd.dao.VTopicDao;
+import com.wfd.entities.TFavorite;
+import com.wfd.entities.TFavoritePK;
 import com.wfd.entities.TPost;
 import com.wfd.entities.TTopic;
 import com.wfd.entities.VTopic;
@@ -22,8 +25,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -36,8 +41,8 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
  * @author user
  */
 
-@Path("/posts")
-public class PostService {
+@Path("/topic")
+public class TopicService {
     @EJB
     VTopicDao vtopicDao;
     @EJB
@@ -46,6 +51,9 @@ public class PostService {
     TPostDao postDao;
     @EJB
     TTopicDao topicDao;
+    @EJB
+    TFavoriteDao favoriteDao;
+    
     
     @GET
     @Produces({"application/json"})
@@ -61,7 +69,7 @@ public class PostService {
     }
     
     @PUT
-    @Path("/topic")
+    @Path("/new")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     public void newTopics(@FormDataParam("content") String content,
                             @FormDataParam("user_id") Integer userID,
@@ -80,6 +88,30 @@ public class PostService {
         topic.setPostId(post);
         topicDao.persist(topic);
         System.out.println("Success");
+    }
+    
+    
+    @POST
+    @Path("{id}")
+    public void follows(@PathParam("id") int topicID, @QueryParam("type") String type) {
+        
+        if(type.equalsIgnoreCase(Constants.DISAGREE)){
+            topicDao.disagree(topicID);
+        }else if(type.equalsIgnoreCase(Constants.AGREE)){
+            topicDao.agree(topicID);
+        }
+    }
+    
+    @POST
+    @Path("{id}/favorite")
+    public void addFavorite(@PathParam("id") int topicID, @QueryParam("user_id") int userID) {
+        
+        TFavoritePK pk = new TFavoritePK();
+        pk.setUserId(userID);
+        pk.setTopicId(topicID);
+        TFavorite favorite = new TFavorite();
+        favorite.setTFavoritePK(pk);
+        favoriteDao.update(favorite);
     }
     
 }

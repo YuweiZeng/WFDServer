@@ -32,7 +32,9 @@ public abstract class GenericDao <T, ID extends Serializable>{
     }
     
     public void update(T entity){
+        getEntityManager().getTransaction().begin();
         getEntityManager().merge(entity);
+        getEntityManager().getTransaction().commit();
     }
     
     public List<T> findAll(){

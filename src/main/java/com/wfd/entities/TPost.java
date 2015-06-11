@@ -44,7 +44,7 @@ public class TPost implements Serializable {
     @Column(name = "CONTENT")
     private String content;
     @Column(name = "DELETED")
-    private Boolean deleted;
+    private Boolean deleted = false;
     @Column(name = "TIME_T")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeT;

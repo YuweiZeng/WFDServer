@@ -48,10 +48,21 @@ public class TUsers implements Serializable {
     private String password;
     @Size(max = 255)
     @Column(name = "SECURITYQUESTION")
-    private String securityquestion;
+    private String securityquestion = "111111";
     @Size(max = 255)
     @Column(name = "SECURITYANSWER")
-    private String securityanswer;
+    private String securityanswer = "111111";
+    @Size(max = 255)
+    @Column(name = "LOCATION")
+    private String location = "Australia";
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
     @OneToMany(mappedBy = "userId")
     private Collection<TPost> tPostCollection;
 

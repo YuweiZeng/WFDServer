@@ -17,4 +17,7 @@ public class Constants {
     public static String ORDERBY_LATEST = "latest";
     public static String ORDERBY_FAVORITE = "favorite";
     
+    public static String AGREE = "agree";
+    public static String DISAGREE = "disagree";
+    
 }

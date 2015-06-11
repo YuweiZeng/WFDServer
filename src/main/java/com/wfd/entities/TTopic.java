@@ -34,9 +34,9 @@ public class TTopic implements Serializable {
     @Column(name = "TOPIC_ID")
     private Integer topicId;
     @Column(name = "SUPPORT_COUNT")
-    private Integer supportCount;
+    private Integer supportCount = 0;
     @Column(name = "DISAGREE_COUNT")
-    private Integer disagreeCount;
+    private Integer disagreeCount = 0;
     @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID")
     @ManyToOne
     private TPost postId;

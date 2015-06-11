@@ -31,7 +31,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.wfd.services.PostService.class);
+        resources.add(com.wfd.services.TopicService.class);
         resources.add(com.wfd.services.UserService.class);
     }
     
