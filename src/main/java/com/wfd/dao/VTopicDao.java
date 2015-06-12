@@ -5,9 +5,9 @@
  */
 package com.wfd.dao;
 
-import com.wfd.entities.TPost;
 import com.wfd.entities.VTopic;
 import com.wfd.util.Constants;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -68,6 +68,28 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
         query.setParameter(1, topicID);
         return (VTopic)query.getSingleResult();
         
+    }
+    
+    public List<VTopic> seachTopic(String keyword, String category, String time){
+        
+        List<String> search = new ArrayList<String>();
+        if(keyword != null){
+            search.add("t.content like '%" + keyword + "%'");
+        }
+        if(category != null){
+            search.add("t.category like '%" + category + "%'");
+        }
+        if(time != null){
+            search.add("t.timeT like '%" + time + "%'");
+        }
+        String jpql = "select t from VTopic t";
+        if(!search.isEmpty()){
+            jpql += " where " + String.join(" and ", search);
+        }
+        System.out.println(jpql);
+        Query query = em.createQuery(jpql).setMaxResults(Constants.DEFAULT_PAGE_NUMBER);
+        List<VTopic> list = query.getResultList();
+        return list;
     }
     
 }
