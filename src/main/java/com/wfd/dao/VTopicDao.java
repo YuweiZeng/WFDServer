@@ -37,7 +37,7 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
     
     public List<VTopic> getLatestPost(){
         
-        String jpql = "select t from VTopic t order by t.timeT";
+        String jpql = "select t from VTopic t order by t.timeT desc";
         Query query = em.createQuery(jpql).setMaxResults(Constants.DEFAULT_PAGE_NUMBER);
         List<VTopic> list = query.getResultList();
         

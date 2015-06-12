@@ -35,7 +35,7 @@ public class TTopicDao extends GenericDao<TTopic,Integer>{
         em.getTransaction().begin();
         TTopic topic = this.find(id);
         topic.setDisagreeCount(topic.getDisagreeCount() + 1);
-        em.flush();
+//        em.flush();
         em.getTransaction().commit();
     }
     
@@ -43,7 +43,7 @@ public class TTopicDao extends GenericDao<TTopic,Integer>{
         em.getTransaction().begin();
         TTopic topic = this.find(id);
         topic.setSupportCount(topic.getSupportCount() + 1);
-        em.flush();
+//        em.flush();
         em.getTransaction().commit();
     }
     

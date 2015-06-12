@@ -33,6 +33,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import org.json.JSONObject;
 
 
 /**
@@ -130,8 +131,11 @@ public class TopicService {
     @Path("/new")
     @Consumes("text/plain")
     @Produces("text/plain")
-    public String newTopic(@QueryParam("user_id") int userID, String content) {
+    public String newTopic(@QueryParam("user_id") int userID, String msg) {
         
+        JSONObject json = new JSONObject(msg);
+        String category = json.getString("category");
+        String content = json.getString("content");
         // Initial post table
         TPost post = new TPost();
         post.setContent(content);
@@ -142,34 +146,13 @@ public class TopicService {
          // Initial topic table
         TTopic topic = new TTopic();
         topic.setPostId(post);
+        topic.setCategory(category);
         topicDao.persist(topic);
         System.out.println("Success");
-        return "success";
-        
+        return "success"; 
     }
     
-    //disable the image upload
-//    @PUT
-//    @Path("/new")
-//    @Consumes({MediaType.MULTIPART_FORM_DATA})
-//    public void newTopics(@FormDataParam("content") String content,
-//                            @FormDataParam("user_id") Integer userID,
-//                            @FormDataParam("image") InputStream fileInputStream,
-//                            @FormDataParam("image") FormDataContentDisposition chd){
-//        String imagePath = Constants.IMAGE_STORAGE_PATH + userID + File.separator + DateUtil.getCurrentDateString() + chd.getFileName();
-//        FileUtil.writeToFile(fileInputStream, imagePath);
-//        // Initial post table
-//        TPost post = new TPost();
-//        post.setContent(content);
-//        post.setUserId(usersDao.find(userID));
-//        post = postDao.persist(post);
-//        System.out.println("end: " + post.getPostId());
-//        // Initial topic table
-//        TTopic topic = new TTopic();
-//        topic.setPostId(post);
-//        topicDao.persist(topic);
-//        System.out.println("Success");
-//    }
+
     
     
     @POST
@@ -200,3 +183,27 @@ public class TopicService {
     }
     
 }
+
+
+    //disable the image upload
+//    @PUT
+//    @Path("/new")
+//    @Consumes({MediaType.MULTIPART_FORM_DATA})
+//    public void newTopics(@FormDataParam("content") String content,
+//                            @FormDataParam("user_id") Integer userID,
+//                            @FormDataParam("image") InputStream fileInputStream,
+//                            @FormDataParam("image") FormDataContentDisposition chd){
+//        String imagePath = Constants.IMAGE_STORAGE_PATH + userID + File.separator + DateUtil.getCurrentDateString() + chd.getFileName();
+//        FileUtil.writeToFile(fileInputStream, imagePath);
+//        // Initial post table
+//        TPost post = new TPost();
+//        post.setContent(content);
+//        post.setUserId(usersDao.find(userID));
+//        post = postDao.persist(post);
+//        System.out.println("end: " + post.getPostId());
+//        // Initial topic table
+//        TTopic topic = new TTopic();
+//        topic.setPostId(post);
+//        topicDao.persist(topic);
+//        System.out.println("Success");
+//    }

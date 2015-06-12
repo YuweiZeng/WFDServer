@@ -23,6 +23,7 @@ topic_id INTEGER NOT NULL AUTO_INCREMENT,
 post_id INTEGER,
 support_count INTEGER,
 disagree_count INTEGER,
+category VARCHAR(255) default "work",
 CONSTRAINT pk_topic_id PRIMARY KEY (topic_id),
 CONSTRAINT fk_topic_post FOREIGN KEY (post_id) REFERENCES t_post(post_id)
 );
@@ -49,7 +50,7 @@ CONSTRAINT pk_relation_id PRIMARY KEY (user_id,topic_id)
 );
 
 CREATE VIEW v_topic AS
-SELECT t_post.post_id as post_id,user_id,content,deleted,time_t,support_count,disagree_count,topic_id
+SELECT t_post.post_id as post_id,user_id,content,deleted,time_t,support_count,disagree_count,topic_id,category
 FROM t_post,t_topic
 WHERE t_post.post_id = t_topic.post_id;
 

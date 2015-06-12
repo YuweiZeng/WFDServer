@@ -51,6 +51,16 @@ public class VTopic implements Serializable {
     private Integer disagreeCount;
     @Column(name = "topic_id")
     private Integer topicId;
+    @Column(name = "category")
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public Integer getTopicId() {
         return topicId;

@@ -37,6 +37,10 @@ public class TTopic implements Serializable {
     private Integer supportCount = 0;
     @Column(name = "DISAGREE_COUNT")
     private Integer disagreeCount = 0;
+    @Column(name = "category")
+    private String category = "work";
+
+
     @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID")
     @ManyToOne
     private TPost postId;
@@ -44,6 +48,13 @@ public class TTopic implements Serializable {
     public TTopic() {
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
     public TTopic(Integer topicId) {
         this.topicId = topicId;
     }
