@@ -49,7 +49,7 @@ CONSTRAINT pk_relation_id PRIMARY KEY (user_id,topic_id)
 );
 
 CREATE VIEW v_topic AS
-SELECT t_post.post_id as post_id,user_id,content,deleted,time_t,support_count,disagree_count
+SELECT t_post.post_id as post_id,user_id,content,deleted,time_t,support_count,disagree_count,topic_id
 FROM t_post,t_topic
 WHERE t_post.post_id = t_topic.post_id;
 

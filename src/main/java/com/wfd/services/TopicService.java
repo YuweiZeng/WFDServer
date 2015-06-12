@@ -9,6 +9,7 @@ package com.wfd.services;
 import com.wfd.dao.TCommentDao;
 import com.wfd.dao.TFavoriteDao;
 import com.wfd.dao.TPostDao;
+import com.wfd.dao.TPostRelationDao;
 import com.wfd.dao.TTopicDao;
 import com.wfd.dao.TUsersDao;
 import com.wfd.dao.VTopicDao;
@@ -16,13 +17,12 @@ import com.wfd.entities.TComment;
 import com.wfd.entities.TFavorite;
 import com.wfd.entities.TFavoritePK;
 import com.wfd.entities.TPost;
+import com.wfd.entities.TPostRelation;
+import com.wfd.entities.TPostRelationPK;
 import com.wfd.entities.TTopic;
 import com.wfd.entities.VTopic;
 import com.wfd.util.Constants;
-import com.wfd.util.DateUtil;
-import com.wfd.util.FileUtil;
-import java.io.File;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -33,9 +33,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
 /**
@@ -57,6 +54,8 @@ public class TopicService {
     TFavoriteDao favoriteDao;
     @EJB
     TCommentDao commentDao;
+    @EJB
+    TPostRelationDao postRelationDao; 
     
     
     @GET
@@ -65,17 +64,44 @@ public class TopicService {
         
         if(orderBy.equalsIgnoreCase(Constants.ORDERBY_LATEST)){
             return vtopicDao.getLatestPost();
-        }else if(orderBy.equalsIgnoreCase(Constants.ORDERBY_FAVORITE)){
-            return vtopicDao.getFavoritePost();
+        }else if(orderBy.equalsIgnoreCase(Constants.ORDERBY_SUPPORT)){
+            return vtopicDao.getBestOfPost();
         }else{
             return null;
         }
     }
+    
+    @GET
+    @Path("/favorite")
+    @Produces({"application/json"})
+    public List<VTopic> getFavorites(@QueryParam("user_id") int userID) {
+        
+        List<TFavorite> favoriteList = favoriteDao.getFavoriteList(userID);
+        List<VTopic> topicList = new ArrayList<VTopic>();
+        for(TFavorite f : favoriteList){
+            topicList.add(vtopicDao.getPostByTopicID(f.getTFavoritePK().getTopicId()));
+        }
+        return topicList;
+    }
 
+    
+    @GET // topic/2/comments
+    @Path("{id}/comments")
+    @Produces({"application/json"})
+    public List<TPost> getComments(@PathParam("id") int postID) {
+        
+        List<TPostRelation> chilidList = postRelationDao.getChildID(postID);
+        List<TPost> commentList = new ArrayList<TPost>();
+        for(TPostRelation r : chilidList){
+            commentList.add(postDao.find(r.getTPostRelationPK().getChildId()));
+        }
+        return commentList;
+    }
+    
     @POST
     @Path("{id}/newcomment")
     @Consumes("text/plain")
-    public void addComment(@PathParam("id") int topicID, @QueryParam("user_id") int userID, String content) {
+    public String addComment(@PathParam("id") int postID, @QueryParam("user_id") int userID, String content) {
         // Initial post table
         TPost post = new TPost();
         post.setContent(content);
@@ -89,12 +115,23 @@ public class TopicService {
         commentDao.persist(comment);
         System.out.println("Success");
         
+        //initial relation table
+        TPostRelationPK pk = new TPostRelationPK();
+        pk.setParentId(postID);
+        pk.setChildId(post.getPostId());
+        TPostRelation relation = new TPostRelation();
+        relation.setTPostRelationPK(pk);
+        postRelationDao.persist(relation);
+        
+        return "success";
     }
     
     @PUT
     @Path("/new")
     @Consumes("text/plain")
-    public void newTopic(@QueryParam("user_id") int userID, String content) {
+    @Produces("text/plain")
+    public String newTopic(@QueryParam("user_id") int userID, String content) {
+        
         // Initial post table
         TPost post = new TPost();
         post.setContent(content);
@@ -107,6 +144,7 @@ public class TopicService {
         topic.setPostId(post);
         topicDao.persist(topic);
         System.out.println("Success");
+        return "success";
         
     }
     
@@ -136,18 +174,21 @@ public class TopicService {
     
     @POST
     @Path("{id}/follows")
-    public void follows(@PathParam("id") int topicID, @QueryParam("type") String type) {
+    @Produces("text/plain")
+    public String follows(@PathParam("id") int topicID, @QueryParam("type") String type) {
         
         if(type.equalsIgnoreCase(Constants.DISAGREE)){
             topicDao.disagree(topicID);
         }else if(type.equalsIgnoreCase(Constants.AGREE)){
             topicDao.agree(topicID);
         }
+        return "success";
     }
     
     @POST
     @Path("{id}/favorite")
-    public void addFavorite(@PathParam("id") int topicID, @QueryParam("user_id") int userID) {
+    @Produces("text/plain")
+    public String addFavorite(@PathParam("id") int topicID, @QueryParam("user_id") int userID) {
         
         TFavoritePK pk = new TFavoritePK();
         pk.setUserId(userID);
@@ -155,6 +196,7 @@ public class TopicService {
         TFavorite favorite = new TFavorite();
         favorite.setTFavoritePK(pk);
         favoriteDao.update(favorite);
+        return "success";
     }
     
 }

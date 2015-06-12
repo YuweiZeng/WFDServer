@@ -48,7 +48,7 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
         return list;
     }
     
-    public List<VTopic> getFavoritePost(){
+    public List<VTopic> getBestOfPost(){
         
         String jpql = "select t from VTopic t order by t.supportCount desc";
         Query query = em.createQuery(jpql).setMaxResults(Constants.DEFAULT_PAGE_NUMBER);
@@ -59,6 +59,15 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
             return null;
         }
         return list;
+    }
+    
+    public VTopic getPostByTopicID(int topicID){
+        
+        String jpql = "select t from VTopic t where t.topicId=?1 order by t.timeT desc";
+        Query query = em.createQuery(jpql).setMaxResults(Constants.DEFAULT_PAGE_NUMBER);
+        query.setParameter(1, topicID);
+        return (VTopic)query.getSingleResult();
+        
     }
     
 }

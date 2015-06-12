@@ -47,4 +47,13 @@ public class TTopicDao extends GenericDao<TTopic,Integer>{
         em.getTransaction().commit();
     }
     
+    public int getTopicID(int postID){
+//        String jpql = "select t from TTopic t where t.username=?1";
+//        Query query = em.createQuery(jpql,TUsers.class);
+//        query.setParameter(1, userName);
+//        return (TUsers)query.getSingleResult();
+        return 1;
+        
+    }
+    
 }

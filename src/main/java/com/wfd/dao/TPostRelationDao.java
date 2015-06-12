@@ -5,8 +5,8 @@
  */
 package com.wfd.dao;
 
-import com.wfd.entities.TFavorite;
-import com.wfd.entities.TFavoritePK;
+import com.wfd.entities.TPostRelation;
+import com.wfd.entities.TPostRelationPK;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,12 +19,12 @@ import javax.persistence.Query;
  * @author user
  */
 @Stateless
-public class TFavoriteDao extends GenericDao<TFavorite,TFavoritePK>{
+public class TPostRelationDao extends GenericDao<TPostRelation,TPostRelationPK>{
 //    @PersistenceContext(unitName = "WFD_JPA")
     private EntityManager em;
     
-    public TFavoriteDao(){
-        super(TFavorite.class);
+    public TPostRelationDao(){
+        super(TPostRelation.class);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("WFD_JPA");
         em = emf.createEntityManager();
     }
@@ -34,10 +34,10 @@ public class TFavoriteDao extends GenericDao<TFavorite,TFavoritePK>{
         return em;
     }
     
-    public List<TFavorite> getFavoriteList(int userID){
-        String jpql = "select t from TFavorite t where t.tFavoritePK.userId=?1";
-        Query query = em.createQuery(jpql,TFavorite.class);
-        query.setParameter(1, userID);
+    public List<TPostRelation> getChildID(int parentId){
+        String jpql = "select t from TPostRelation t where t.tPostRelationPK.parentId=?1";
+        Query query = em.createQuery(jpql,TPostRelation.class);
+        query.setParameter(1, parentId);
         return query.getResultList();
     }
     

@@ -49,6 +49,16 @@ public class VTopic implements Serializable {
     private Integer supportCount;
     @Column(name = "disagree_count")
     private Integer disagreeCount;
+    @Column(name = "topic_id")
+    private Integer topicId;
+
+    public Integer getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Integer topicId) {
+        this.topicId = topicId;
+    }
 
     public VTopic() {
     }
