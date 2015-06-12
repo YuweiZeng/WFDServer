@@ -51,9 +51,10 @@ public class SearchService {
     @Produces({"application/json"})
     public List<VTopic> getTopics(@QueryParam("keyword") String keyword,
                                    @QueryParam("category") String category,
-                                   @QueryParam("time") String time) {
+                                   @QueryParam("startTime") String startTime,
+                                   @QueryParam("endTime") String endTime) {
         
-        return vtopicDao.seachTopic(keyword, category, time);
+        return vtopicDao.seachTopic(keyword, category, startTime, endTime);
     }
     
 }

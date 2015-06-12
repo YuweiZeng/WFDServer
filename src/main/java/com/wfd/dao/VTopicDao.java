@@ -70,7 +70,7 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
         
     }
     
-    public List<VTopic> seachTopic(String keyword, String category, String time){
+    public List<VTopic> seachTopic(String keyword, String category, String startTime, String endTime){
         
         List<String> search = new ArrayList<String>();
         if(keyword != null){
@@ -79,8 +79,8 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
         if(category != null){
             search.add("t.category like '%" + category + "%'");
         }
-        if(time != null){
-            search.add("t.timeT like '%" + time + "%'");
+        if(startTime != null && endTime != null){
+            search.add("t.timeT between '" + startTime + "' and '" + endTime + "'");
         }
         String jpql = "select t from VTopic t";
         if(!search.isEmpty()){
