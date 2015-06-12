@@ -45,9 +45,9 @@ public class UserService {
       String pwd = json.getString("pwd");
       TUsers user = userDao.check(userName, pwd);
       if(user == null){
-          result.put("login", "false");
+          result.put("login", "fail");
       }else{
-          result.put("login", "true");
+          result.put("login", "success");
           result.put("user_id", user.getUserId().toString());
       }
       return result.toString();

@@ -47,6 +47,12 @@ public class TUsersDao extends GenericDao<TUsers, Integer>{
        Query query = em.createQuery(jpql,TUsers.class);
        query.setParameter(1, userName);
        query.setParameter(2, pwd);
-       return (TUsers)query.getSingleResult();
+       TUsers user;
+       try{
+           user = (TUsers)query.getSingleResult();
+       }catch(Exception e){
+           return null;
+       }
+       return user;
     }
 }
