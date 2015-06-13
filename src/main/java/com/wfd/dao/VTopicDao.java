@@ -8,6 +8,8 @@ package com.wfd.dao;
 import com.wfd.entities.VTopic;
 import com.wfd.util.Constants;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -57,6 +59,16 @@ public class VTopicDao extends GenericDao<VTopic,Integer>{
         if(list.isEmpty()){
             System.out.println("No post in db");
             return null;
+        }
+        return list;
+    }
+    
+    public List<VTopic> getRandomPost(){
+        
+        List<VTopic> list = this.findAll();
+        Collections.shuffle(list);
+        if(list.size() > Constants.DEFAULT_PAGE_NUMBER){
+            return list.subList(0, Constants.DEFAULT_PAGE_NUMBER);
         }
         return list;
     }

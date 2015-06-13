@@ -67,13 +67,15 @@ public class TopicService {
             return vtopicDao.getLatestPost();
         }else if(orderBy.equalsIgnoreCase(Constants.ORDERBY_SUPPORT)){
             return vtopicDao.getBestOfPost();
+        }else if(orderBy.equalsIgnoreCase(Constants.ORDERBY_RANDOM)){
+            return vtopicDao.getRandomPost();
         }else{
             return null;
         }
     }
-    
+
     @GET
-    @Path("/favorite")
+    @Path("/random")
     @Produces({"application/json"})
     public List<VTopic> getFavorites(@QueryParam("user_id") int userID) {
         
@@ -84,7 +86,6 @@ public class TopicService {
         }
         return topicList;
     }
-
     
     @GET // topic/2/comments
     @Path("{id}/comments")
