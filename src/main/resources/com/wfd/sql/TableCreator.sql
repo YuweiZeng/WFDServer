@@ -50,9 +50,9 @@ CONSTRAINT pk_relation_id PRIMARY KEY (user_id,topic_id)
 );
 
 CREATE VIEW v_topic AS
-SELECT t_post.post_id as post_id,user_id,content,deleted,time_t,support_count,disagree_count,topic_id,category
-FROM t_post,t_topic
-WHERE t_post.post_id = t_topic.post_id;
+SELECT t_post.post_id as post_id,t_post.user_id as user_id,content,deleted,time_t,support_count,disagree_count,topic_id,category,username
+FROM t_post,t_topic,t_users
+WHERE t_post.post_id = t_topic.post_id and t_post.user_id = t_users.user_id;
 
 CREATE VIEW v_comment AS
 SELECT t_post.post_id as post_id,user_id,content,deleted,time_t

@@ -53,6 +53,16 @@ public class VTopic implements Serializable {
     private Integer topicId;
     @Column(name = "category")
     private String category;
+    @Column(name = "username")
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getCategory() {
         return category;
