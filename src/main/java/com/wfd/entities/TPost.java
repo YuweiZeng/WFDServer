@@ -6,6 +6,7 @@
 package com.wfd.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,12 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -45,9 +42,9 @@ public class TPost implements Serializable {
     private String content;
     @Column(name = "DELETED")
     private Boolean deleted = false;
-    @Column(name = "TIME_T")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeT;
+    @Column(name = "TIME_T",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+//    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp timeT;
     @OneToMany(mappedBy = "postId")
     private Collection<TComment> tCommentCollection;
     @OneToMany(mappedBy = "postId")
@@ -87,11 +84,11 @@ public class TPost implements Serializable {
         this.deleted = deleted;
     }
 
-    public Date getTimeT() {
+    public Timestamp getTimeT() {
         return timeT;
     }
 
-    public void setTimeT(Date timeT) {
+    public void setTimeT(Timestamp timeT) {
         this.timeT = timeT;
     }
 
